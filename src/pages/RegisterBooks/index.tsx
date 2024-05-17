@@ -1,27 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../api/api';
 
 // import { Container } from './styles';
 
 const RegisterBooks: React.FC = () => {
+  const [authors, setAuthors] = useState([]);
+  const [publishers, setPublishers] = useState([]);
+
+  useEffect(() => {
+    api.get('publishers')
+      .then(response => {
+        setPublishers(response.data.publishers);
+      })
+      .catch(error => {
+        console.error('Houve um erro ao buscar as Editoras', error);
+      });
+  }, []);
+  console.log(publishers);
+
+  useEffect(() => {
+    api.get('authors')
+      .then(response => {
+        setAuthors(response.data.authors);
+      })
+      .catch(error => {
+        console.error('Houve um erro ao buscar os autores:', error);
+      });
+  }, []);
+  console.log(authors);
+
+ 
 
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  // const [numberOfPages, setNumberOfPages] = useState(0);
-  // const [publisherID, setPublisherID] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  // const [category, setCategory] = useState('Ficçao');
+  const [Description, setDescription] = useState('');
+  const [NumberOfPages, setNumberOfPages] = useState(10);
+  const [PublisherID, setPublisherID] = useState('4f3238c3-181a-42c0-829d-68a3c287a1af');
+  const [ImageUrl, setImageUrl] = useState('');
+  const [Category, setCategory] = useState('Ficçao');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+
     const book = {
       name,
-      description,
-      // numberOfPages,
-      // publisherID,
-      imageUrl,
-      // category,
+      Description,
+      NumberOfPages,
+      PublisherID,
+      ImageUrl,
+      Category,
     };
 
     try {
@@ -31,6 +58,7 @@ const RegisterBooks: React.FC = () => {
       console.error('Houve um erro ao cadastrar o livro:', error);
     }
   };
+
 
   return (
     <div className="grid grid-cols-1 pt-10 gap-x-8 gap-y-8 md:grid-cols-3">
@@ -51,7 +79,7 @@ const RegisterBooks: React.FC = () => {
                   type="text"
                   name="book-name"
                   id="book-name"
-                  autoComplete="given-name"  
+                  autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={name}
                   onChange={e => setName(e.target.value)}
@@ -59,39 +87,7 @@ const RegisterBooks: React.FC = () => {
               </div>
             </div>
 
-            {/* <div className="sm:col-span-3">
-              <label htmlFor="author-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Nome do Author
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="author-name"
-                  id="author-name"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={publisherID}
-                  onChange={e => setPublisherID(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-3">
-              <label htmlFor="publisher-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Nome da Editora
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="publisher-name"
-                  id="publisher-name"
-                  autoComplete="publisher-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={publisherID}
-                  onChange={e => setPublisherID(e.target.value)}
-                />
-              </div>
-            </div> */}
+           
 
             <div className="col-span-full">
               <label htmlFor="about" className="block text-sm font-medium leading-6 text-black">
@@ -104,11 +100,47 @@ const RegisterBooks: React.FC = () => {
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
-                  value={description}
+                  value={Description}
                   onChange={e => setDescription(e.target.value)}
                 />
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-400">Descreva a sinopse do livro</p>
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="Autores" className="block w-full text-sm font-medium leading-6 text-gray-900">
+                Autores
+              </label>
+              <select
+                id="Autores"
+                name="Autores"
+                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue=""
+              >
+                {authors.map((author) =>(
+                  <option >
+                    {author.Name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="Editoras" className="block w-full text-sm font-medium leading-6 text-gray-900">
+                Editoras
+              </label>
+              <select
+                id="Editoras"
+                name="Editoras"
+                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue=""
+              >
+                {publishers.map((publisher) =>(
+                  <option >
+                    {publisher.Name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="col-span-full">
@@ -122,7 +154,7 @@ const RegisterBooks: React.FC = () => {
                   id="img-url"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={imageUrl}
+                  value={ImageUrl}
                   onChange={e => setImageUrl(e.target.value)}
                 />
               </div>
