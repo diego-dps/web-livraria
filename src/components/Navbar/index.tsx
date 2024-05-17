@@ -27,8 +27,8 @@ const user = {
 const navigation = [
   { name: 'Resgistrar livro', href: '/register-book', current: false },
   { name: 'Livros', href: '/', current: false },
-  { name: 'Autores', href: '#', current: false },
-  { name: 'Editoras', href: '#', current: false },
+  { name: 'Autores', href: '/register-author', current: false },
+  { name: 'Editoras', href: '/register-publisher', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
