@@ -7,6 +7,9 @@ import HomePage from './pages/Home';
 import LoginPage from './pages/login';
 import BookPage from './pages/BookPage';
 import RegisterBooks from './pages/RegisterBooks';
+import RegisterAuthors from './pages/RegisterAuthors';
+import RegisterPublishers from './pages/RegisterPublishers';
+import TestComponents from './pages/TestComponents';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +23,18 @@ const router = createBrowserRouter([
       {
         path: "register-book",
         element: <RegisterBooks />,
+      },
+      {
+        path: "register-Publisher",
+        element: <RegisterPublishers />,
+      },
+      {
+        path: "register-author",
+        element: <RegisterAuthors />,
+      },
+      {
+        path: "teste",
+        element: <TestComponents />
       },
     ],
   },
