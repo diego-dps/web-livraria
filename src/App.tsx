@@ -10,6 +10,7 @@ import RegisterBooks from './pages/RegisterBooks';
 import RegisterAuthors from './pages/RegisterAuthors';
 import RegisterPublishers from './pages/RegisterPublishers';
 import TestComponents from './pages/TestComponents';
+import RegisterPage from './pages/register';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cadastro",
-    element: <LoginPage />,
+    element: <RegisterPage />,
   },
 ]);
 
